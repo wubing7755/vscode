@@ -77,9 +77,8 @@ type OnboardingActionEvent = {
 
 type EnterpriseSignInUiState = 'options' | 'instance' | 'progress';
 
-// Hestia: onboarding is only reachable when a default chat agent is configured
-// (see tryShowOnboarding in startupPage.ts), so this module must not fail to load
-// when the product ships without one.
+// Hestia：引导向导只会在配置了默认 Chat Agent 时展示（见 startupPage.ts 的
+// tryShowOnboarding），因此在无该配置的产品里本模块不能加载失败。
 const defaultChat = product.defaultChatAgent!;
 
 /**
@@ -175,8 +174,7 @@ export class OnboardingVariationA extends Disposable implements IOnboardingServi
 		}
 
 		if (!defaultChat) {
-			// Hestia ships without a default chat agent; the wizard is AI-centric and
-			// has no meaningful content in that configuration.
+			// Hestia：产品未配置默认 Chat Agent，该向导以 AI 登录为主，此时没有可展示内容。
 			return;
 		}
 		this._isShowing = true;

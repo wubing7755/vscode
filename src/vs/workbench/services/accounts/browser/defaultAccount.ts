@@ -94,8 +94,8 @@ interface IMcpRegistryResponse {
 
 function toDefaultAccountConfig(defaultChatAgent: IDefaultChatAgent | undefined): IDefaultAccountConfig {
 	if (!defaultChatAgent) {
-		// No default chat agent (e.g. Hestia): the default account is unavailable,
-		// keep the service dormant instead of failing to construct the workbench.
+		// Hestia：无默认 Chat Agent 时默认账号不可用，返回休眠配置，
+		// 避免在服务构造期解引用空值导致 workbench 启动失败。
 		return {
 			preferredExtensions: [],
 			authenticationProvider: {

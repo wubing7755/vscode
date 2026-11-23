@@ -247,7 +247,7 @@ export class StartupPageRunnerContribution extends Disposable implements IWorkbe
 		}
 
 		if (!this.productService.defaultChatAgent) {
-			return; // no default chat agent configured (e.g. Hestia): AI onboarding does not apply
+			return; // Hestia：未配置默认 Chat Agent，以 AI 为中心的引导流程不适用
 		}
 
 		if (this.chatEntitlementService.sentiment.hidden) {

@@ -608,8 +608,8 @@ BUILD_TARGETS.forEach(buildTarget => {
 			packageTask(platform, arch, sourceFolderName, destinationFolderName, opts),
 		];
 
-		// The built-in Copilot extension and its native ripgrep shim only make sense for
-		// products that configure a default chat agent. Hestia ships without one.
+		// Hestia：内置 Copilot 扩展及其原生 ripgrep shim 只对配置了默认 Chat Agent 的产品有意义，
+		// Hestia 不配置该字段。
 		if (product.defaultChatAgent) {
 			packageTasks.push(prepareCopilotRipgrepShimTask(platform, arch, destinationFolderName));
 		}
@@ -638,7 +638,7 @@ BUILD_TARGETS.forEach(buildTarget => {
 			copyCodiconsTask,
 			cleanExtensionsBuildTask,
 			compileNonNativeExtensionsBuildTask,
-			// Copilot is only bundled for products that configure a default chat agent.
+			// Hestia：仅在配置了默认 Chat Agent 的产品中打包 Copilot 扩展。
 			...(product.defaultChatAgent ? [compileCopilotExtensionBuildTask] : []),
 			compileExtensionMediaBuildTask,
 			writeISODate('out-build'),

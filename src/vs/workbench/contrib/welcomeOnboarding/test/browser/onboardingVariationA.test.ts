@@ -26,9 +26,9 @@ import { IChatMicrosoftSignInProbeService } from '../../../chat/browser/chatSetu
 import { ChatSetupStrategy } from '../../../chat/browser/chatSetup/chatSetup.js';
 import { gitHubEnterpriseUrisSetting } from '../../../../services/accounts/common/githubEnterprise.js';
 
-// Hestia (fork): the onboarding wizard is AI-centric and only renders when the product
-// configures a default chat agent. `product.json` no longer does (see PATCHES.md), so the
-// wizard cannot render its first step and this upstream suite no longer applies.
+// Hestia（fork）：引导向导以 AI 为中心，只有产品配置了默认 Chat Agent 才会渲染。
+// `product.json` 已不再配置该字段（见 PATCHES.md），向导无法渲染首步，因此上游这套测试
+// 在当前分支不再适用。
 suite.skip('OnboardingVariationA', () => {
 	const store = ensureNoDisposablesAreLeakedInTestSuite();
 	teardown(() => sinon.restore());
