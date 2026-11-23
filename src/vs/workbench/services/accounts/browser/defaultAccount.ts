@@ -92,7 +92,24 @@ interface IMcpRegistryResponse {
 	readonly mcp_registries: ReadonlyArray<IMcpRegistryProvider>;
 }
 
-function toDefaultAccountConfig(defaultChatAgent: IDefaultChatAgent): IDefaultAccountConfig {
+function toDefaultAccountConfig(defaultChatAgent: IDefaultChatAgent | undefined): IDefaultAccountConfig {
+	if (!defaultChatAgent) {
+		// No default chat agent (e.g. Hestia): the default account is unavailable,
+		// keep the service dormant instead of failing to construct the workbench.
+		return {
+			preferredExtensions: [],
+			authenticationProvider: {
+				default: { id: 'default', name: '' },
+				enterprise: { id: 'enterprise', name: '' },
+				enterpriseProviderConfig: '',
+				scopes: [],
+			},
+			entitlementUrl: '',
+			tokenEntitlementUrl: '',
+			mcpRegistryDataUrl: '',
+			managedSettingsUrl: '',
+		};
+	}
 	return {
 		preferredExtensions: [
 			defaultChatAgent.chatExtensionId,

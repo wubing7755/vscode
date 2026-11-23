@@ -26,7 +26,10 @@ import { IChatMicrosoftSignInProbeService } from '../../../chat/browser/chatSetu
 import { ChatSetupStrategy } from '../../../chat/browser/chatSetup/chatSetup.js';
 import { gitHubEnterpriseUrisSetting } from '../../../../services/accounts/common/githubEnterprise.js';
 
-suite('OnboardingVariationA', () => {
+// Hestia (fork): the onboarding wizard is AI-centric and only renders when the product
+// configures a default chat agent. `product.json` no longer does (see PATCHES.md), so the
+// wizard cannot render its first step and this upstream suite no longer applies.
+suite.skip('OnboardingVariationA', () => {
 	const store = ensureNoDisposablesAreLeakedInTestSuite();
 	teardown(() => sinon.restore());
 

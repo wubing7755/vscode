@@ -246,6 +246,10 @@ export class StartupPageRunnerContribution extends Disposable implements IWorkbe
 			return; // experimental onboarding is disabled
 		}
 
+		if (!this.productService.defaultChatAgent) {
+			return; // no default chat agent configured (e.g. Hestia): AI onboarding does not apply
+		}
+
 		if (this.chatEntitlementService.sentiment.hidden) {
 			return; // AI features are hidden, do not show AI-focused onboarding
 		}

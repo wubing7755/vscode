@@ -10,7 +10,6 @@ import { isCancellationError } from '../../../../base/common/errors.js';
 import { StopWatch } from '../../../../base/common/stopwatch.js';
 import { URI } from '../../../../base/common/uri.js';
 import { isWindows, isMacintosh, isLinux } from '../../../../base/common/platform.js';
-import { assertDefined } from '../../../../base/common/types.js';
 import { FileAccess } from '../../../../base/common/network.js';
 import { ILayoutService } from '../../../../platform/layout/browser/layoutService.js';
 import { KeyCode } from '../../../../base/common/keyCodes.js';
@@ -78,8 +77,10 @@ type OnboardingActionEvent = {
 
 type EnterpriseSignInUiState = 'options' | 'instance' | 'progress';
 
-assertDefined(product.defaultChatAgent, 'Onboarding requires a default chat agent product configuration.');
-const defaultChat = product.defaultChatAgent;
+// Hestia: onboarding is only reachable when a default chat agent is configured
+// (see tryShowOnboarding in startupPage.ts), so this module must not fail to load
+// when the product ships without one.
+const defaultChat = product.defaultChatAgent!;
 
 /**
  * Variation A — Classic Wizard Modal
@@ -173,6 +174,11 @@ export class OnboardingVariationA extends Disposable implements IOnboardingServi
 			return;
 		}
 
+		if (!defaultChat) {
+			// Hestia ships without a default chat agent; the wizard is AI-centric and
+			// has no meaningful content in that configuration.
+			return;
+		}
 		this._isShowing = true;
 		this.previouslyFocusedElement = getActiveWindow().document.activeElement as HTMLElement | undefined;
 
