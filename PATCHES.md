@@ -36,7 +36,7 @@ Hestia 是基于 `microsoft/vscode` 发布标签重新命名的 Code OSS 发行�
 
 - 产品改名为 `Hestia`（`nameShort`/`nameLong`），`applicationName` 为 `hestia`，数据目录改为 `.hestia` / `.hestia-shared`，`win32DirName`/`win32NameVersion` 为 `Hestia`，`win32RegValueName` 为 `Hestia`，`win32AppUserModelId` 为 `HestiaLab.Hestia`，`win32ShellNameShort` 为 `H&estia`，tunnel/server 应用名同步改名，`urlProtocol` 为 `hestia`。
 - 为 Hestia 分配独立的 Inno Setup 应用 ID（`win32x64AppId`、`win32x64UserAppId`），使 Hestia 可以与 VS Code、Code OSS 并存安装。
-- `licenseUrl`/`serverLicenseUrl`/`reportIssueUrl` 指向本 fork。
+- `licenseUrl`/`serverLicenseUrl`/`reportIssueUrl` 指向本 fork（`wubing7755/vscode-hestia`；仓库曾用名 `vscode`，GitHub 侧已重命名）。
 - 删除 `defaultChatAgent`、`trustedExtensionAuthAccess`、`builtInExtensionsEnabledWithAutoUpdates`、`voiceWsUrl`、`webviewContentExternalBaseUrlTemplate`。这些字段都引用了微软服务、GitHub Copilot 扩展或微软 CDN。
 
 原因：重新命名的产品不能继承其他厂商的身份、遥测端点和 CDN。刻意不提供 `webviewContentExternalBaseUrlTemplate`，让 workbench 回退到本地 `vscode-webview://` 端点，而不是 `*.vscode-cdn.net`。

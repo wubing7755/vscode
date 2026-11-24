@@ -9,9 +9,9 @@ AppId={#AppId}
 AppName={#NameLong}
 AppVerName={#NameVersion}
 AppPublisher=HestiaLab
-AppPublisherURL=https://github.com/wubing7755/vscode
-AppSupportURL=https://github.com/wubing7755/vscode/issues
-AppUpdatesURL=https://github.com/wubing7755/vscode/releases
+AppPublisherURL=https://github.com/wubing7755/vscode-hestia
+AppSupportURL=https://github.com/wubing7755/vscode-hestia/issues
+AppUpdatesURL=https://github.com/wubing7755/vscode-hestia/releases
 DefaultGroupName={#NameLong}
 AllowNoIcons=yes
 OutputDir={#OutputDir}
@@ -1390,7 +1390,7 @@ begin
 
   #if "user" == InstallTarget
     if not WizardSilent() and IsAdmin() then begin
-      if MsgBox('This User Installer is not meant to be run as an Administrator. If you would like to install Hestia for all users in this system, download the System Installer instead from https://github.com/wubing7755/vscode/releases. Are you sure you want to continue?', mbError, MB_OKCANCEL) = IDCANCEL then begin
+      if MsgBox('This User Installer is not meant to be run as an Administrator. If you would like to install Hestia for all users in this system, download the System Installer instead from https://github.com/wubing7755/vscode-hestia/releases. Are you sure you want to continue?', mbError, MB_OKCANCEL) = IDCANCEL then begin
         Result := False;
       end;
     end;
