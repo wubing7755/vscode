@@ -48,6 +48,30 @@ Each extension follows the standard VS Code extension structure with `package.js
 3. **Follow imports**: Check what files import the problematic module
 4. **Check test files**: Often reveal usage patterns and expected behavior
 
+## 语言约定（Hestia 分支）
+
+本分支由中文团队维护。以下规则覆盖上游「一律英文」的默认约定，适用于所有改动，与改动落在哪个文件无关。
+
+**新增内容用中文**
+
+- 新增文档：`PATCHES.md`、`docs/**`、扩展 README。
+- 新增代码注释。保留 ASCII 标记以便检索，例如 `// Hestia：……`；若属于产品分歧，同时在 `PATCHES.md` 登记。
+- 提交信息的正文。主题行保持英文，便于与上游历史一起 `git log --grep`。
+- 中文段落不做固定宽度硬换行，一个自然段占一行，保证 diff 可读。
+
+**必须英文（硬约束，不是偏好）**
+
+- 所有经 `nls.localize()` / `localize2()` 外部化的用户可见字符串。翻译流水线从源码英文提取词条，生成 zh-cn、ja、de 等 12 种语言；写成中文会让 zh-cn 变成源语言，其他语言全部失去源文本。中文界面应通过「内置 zh-cn 语言包 + 默认 locale」实现，绝不通过改写源码文本实现。
+- 标识符：setting id、command id、配置键、API 名、context key。这些会被外部引用，翻译等于破坏性变更。
+- 被测试断言、构建脚本消费或 ESLint 规则匹配的字符串。
+- 不翻译上游已有注释。只在本 fork 新增或改写的行使用中文；翻译上游正文会让每次同步产生与功能无关的冲突。
+
+**编码**
+
+- 提交进仓库的内容为 UTF-8 无 BOM、LF 换行。Windows 工作区出现 CRLF 是本仓库 `text=auto` 与 `core.autocrlf` 的既有行为；必须避免的是 CRLF 或 BOM 进入索引。可用 `git ls-files --eol` 核对。
+
+同样的规则与已登记的分歧见 `PATCHES.md`。
+
 ## Validating TypeScript changes
 
 Choose validation based on the scope and risk of the change. Large-scale builds and typechecking can be slow, and consume significant resources, so minimize their use. Prefer existing editor or watch-task diagnostics and the smallest targeted tests that cover the changed behavior. Do not start build or watch tasks, run broad type checks, or make type checking a prerequisite for targeted tests solely as a completion ritual.
