@@ -55,7 +55,7 @@ Each extension follows the standard VS Code extension structure with `package.js
 **新增内容用中文**
 
 - 新增文档：`PATCHES.md`、`docs/**`、扩展 README。
-- 新增代码注释。保留 ASCII 标记以便检索，例如 `// Hestia：……`；若属于产品分歧，同时在 `PATCHES.md` 登记。
+- 新增代码注释。保留 ASCII 前缀 `Hestia` 便于检索，统一写法为 `// Hestia：……`；若属于产品分歧，同时在 `PATCHES.md` 登记。
 - 提交信息的正文。主题行保持英文，便于与上游历史一起 `git log --grep`。
 - 中文段落不做固定宽度硬换行，一个自然段占一行，保证 diff 可读。
 

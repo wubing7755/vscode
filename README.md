@@ -1,76 +1,116 @@
-# Visual Studio Code - Open Source ("Code - OSS")
-[![Feature Requests](https://img.shields.io/github/issues/microsoft/vscode/feature-request.svg)](https://github.com/microsoft/vscode/issues?q=is%3Aopen+is%3Aissue+label%3Afeature-request+sort%3Areactions-%2B1-desc)
-[![Bugs](https://img.shields.io/github/issues/microsoft/vscode/bug.svg)](https://github.com/microsoft/vscode/issues?utf8=✓&q=is%3Aissue+is%3Aopen+label%3Abug)
-
-## The Repository
-
-This repository ("`Code - OSS`") is where we (Microsoft) develop the [Visual Studio Code](https://code.visualstudio.com) product together with the community. Not only do we work on code and issues here, but we also publish our [roadmap](https://github.com/microsoft/vscode/wiki/Roadmap), [monthly iteration plans](https://github.com/microsoft/vscode/wiki/Iteration-Plans), and our [endgame plans](https://github.com/microsoft/vscode/wiki/Running-the-Endgame). This source code is available to everyone under the standard [MIT license](https://github.com/microsoft/vscode/blob/main/LICENSE.txt).
-
-## Visual Studio Code
+# Hestia
 
 <p align="center">
-  <img alt="VS Code in action" src="https://github.com/user-attachments/assets/56af271c-949d-454c-a3ea-16188c063414">
+  <img alt="Hestia" src="resources/win32/code_150x150.png" width="150">
 </p>
 
-[Visual Studio Code](https://code.visualstudio.com) is a distribution of the `Code - OSS` repository with Microsoft-specific customizations released under a traditional [Microsoft product license](https://code.visualstudio.com/License/).
+Hestia 是一款基于 [Visual Studio Code 开源代码](https://github.com/microsoft/vscode)重新构建的桌面代码编辑器，面向 AI 辅助编程场景。它使用上游的 Code OSS 源码，替换产品标识、安装器与品牌资源，并逐步加入自有的 AI 能力。
 
-[Visual Studio Code](https://code.visualstudio.com) combines the simplicity of a code editor with what developers need for their core edit-build-debug cycle. It provides comprehensive code editing, navigation, and understanding support along with lightweight debugging, a rich extensibility model, and lightweight integration with existing tools.
+**Hestia 不是 Microsoft 产品，与 Microsoft 无隶属或背书关系。** 上游版权与许可声明见文末。
 
-Visual Studio Code is updated monthly with new features and bug fixes. You can download it for Windows, macOS, and Linux on the [Visual Studio Code website](https://code.visualstudio.com/Download). To get the latest releases every day, install the [Insiders build](https://code.visualstudio.com/insiders).
+## 项目状态
 
-## Contributing
+当前处于里程碑 1：完成产品化底座，尚未加入 AI 功能。
 
-There are many ways in which you can participate in this project, for example:
+已在 Windows x64 上实际验证：
 
-* [Submit bugs and feature requests](https://github.com/microsoft/vscode/issues), and help us verify them as they are checked in
-* Review [source code changes](https://github.com/microsoft/vscode/pulls)
-* Review the [documentation](https://github.com/microsoft/vscode-docs) and make pull requests for anything from typos to new content.
+| 验证项 | 命令 | 结果 |
+| --- | --- | --- |
+| 依赖安装 | `pnpm install` | 通过 |
+| 客户端编译 | `pnpm run compile-client` | 通过 |
+| 开发启动 | `.\scripts\code.bat` | 通过，窗口标题为 `Welcome - Hestia Dev` |
+| 应用打包 | `pnpm run gulp vscode-win32-x64` | 通过，产出 `Hestia.exe` |
+| 安装包 | `pnpm run gulp vscode-win32-x64-user-setup` | 通过，产出 `VSCodeSetup.exe` |
+| 静默安装 / 卸载 | `/VERYSILENT` | 通过，安装后可正常启动 |
 
-If you are interested in fixing issues and contributing directly to the codebase, please see the document [How to Contribute](https://github.com/microsoft/vscode/wiki/How-to-Contribute), which covers the following:
+当前不提供：扩展市场、自动更新、代码签名、账号体系。以上均在后续里程碑中规划。
 
-* [How to build and run from source](https://github.com/microsoft/vscode/wiki/How-to-Contribute)
-* [The development workflow, including debugging and running tests](https://github.com/microsoft/vscode/wiki/How-to-Contribute#debugging)
-* [Coding guidelines](https://github.com/microsoft/vscode/wiki/Coding-Guidelines)
-* [Submitting pull requests](https://github.com/microsoft/vscode/wiki/How-to-Contribute#pull-requests)
-* [Finding an issue to work on](https://github.com/microsoft/vscode/wiki/How-to-Contribute#where-to-contribute)
-* [Contributing to translations](https://aka.ms/vscodeloc)
+## 与上游的关系
 
-## Feedback
+- 基线为 `microsoft/vscode` 发布标签 `1.147.0`，不是移动中的 `main`。
+- 所有与上游的有意分歧记录在 [PATCHES.md](PATCHES.md)，同步新版本前应先读该文件。
+- 代码风格与语言约定见 [.github/copilot-instructions.md](.github/copilot-instructions.md)。
 
-* Ask a question on [Stack Overflow](https://stackoverflow.com/questions/tagged/vscode)
-* [Request a new feature](CONTRIBUTING.md)
-* Upvote [popular feature requests](https://github.com/microsoft/vscode/issues?q=is%3Aopen+is%3Aissue+label%3Afeature-request+sort%3Areactions-%2B1-desc)
-* [File an issue](https://github.com/microsoft/vscode/issues)
-* Connect with the extension author community on [GitHub Discussions](https://github.com/microsoft/vscode-discussions/discussions) or [Slack](https://aka.ms/vscode-dev-community)
-* Follow [@code](https://x.com/code) and let us know what you think!
+上游 `README.md` 已由本文件替换，原文可从 git 历史中取回。
 
-See our [wiki](https://github.com/microsoft/vscode/wiki/Feedback-Channels) for a description of each of these channels and information on some other available community-driven channels.
+## 分支模型
 
-## Related Projects
+| 分支 | 用途 |
+| --- | --- |
+| `main` | `microsoft/vscode` 的只读镜像，禁止提交 |
+| `hestia` | 产品主线，所有 Hestia 改动落在这里 |
+| `sync/<tag>` | 临时分支，用于把新的上游标签合并进 `hestia` |
 
-Many of the core components and extensions to VS Code live in their own repositories on GitHub. For example, the [node debug adapter](https://github.com/microsoft/vscode-node-debug) and the [mono debug adapter](https://github.com/microsoft/vscode-mono-debug) repositories are separate from each other. For a complete list, please visit the [Related Projects](https://github.com/microsoft/vscode/wiki/Related-Projects) page on our [wiki](https://github.com/microsoft/vscode/wiki).
+## 构建
 
-## Bundled Extensions
+### 环境要求
 
-VS Code includes a set of built-in extensions located in the [extensions](extensions) folder, including grammars and snippets for many languages. Extensions that provide rich language support (inline suggestions, Go to Definition) for a language have the suffix `language-features`. For example, the `json` extension provides coloring for `JSON` and the `json-language-features` extension provides rich language support for `JSON`.
+| 项 | 版本 | 说明 |
+| --- | --- | --- |
+| Node.js | **24.22.1** | 必须与 [.nvmrc](.nvmrc) 完全一致，否则原生模块编译会失败 |
+| pnpm | 12.16.0 | 由 `package.json` 的 `packageManager` 固定 |
+| Python | 3.8+ | node-gyp 需要 |
+| Visual C++ 生成工具 | VS 2019 或更高 | 安装「使用 C++ 的桌面开发」工作负载；VS 2026 已可用 |
+| Inno Setup | 6.x | 仅打包安装包时需要 |
 
-## Development Container
+安装 pnpm 时可显式指定版本：`npm i -g pnpm@12.16.0`。
 
-This repository includes a Visual Studio Code Dev Containers / GitHub Codespaces development container.
+### 首次构建
 
-* For [Dev Containers](https://aka.ms/vscode-remote/download/containers), use the **Dev Containers: Clone Repository in Container Volume...** command, which creates a Docker volume for better disk I/O on macOS and Windows.
-  * If you already have VS Code and Docker installed, you can also click [here](https://vscode.dev/redirect?url=vscode://ms-vscode-remote.remote-containers/cloneInVolume?url=https://github.com/microsoft/vscode) to get started. This will cause VS Code to automatically install the Dev Containers extension if needed, clone the source code into a container volume, and spin up a dev container for use.
+```bat
+nvm use 24.22.1
+pnpm install
+pnpm run compile-client
+```
 
-* For Codespaces, install the [GitHub Codespaces](https://marketplace.visualstudio.com/items?itemName=GitHub.codespaces) extension in VS Code, and use the **Codespaces: Create New Codespace** command.
+### 开发运行
 
-Docker / the Codespace should have at least **4 cores and 6 GB of RAM (8 GB recommended)** to run a full build. See the [development container README](.devcontainer/README.md) for more information.
+```bat
+.\scripts\code.bat
+```
 
-## Code of Conduct
+首次运行会下载 Electron。若网络受限，先设置镜像：
 
-This project has adopted the [Microsoft Open Source Code of Conduct](https://opensource.microsoft.com/codeofconduct/). For more information, see the [Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/) or contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additional questions or comments.
+```bat
+set ELECTRON_MIRROR=https://npmmirror.com/mirrors/electron/
+```
 
-## License
+### 打包
 
-Copyright (c) Microsoft Corporation. All rights reserved.
+`patch-win32-dependencies` 这一步需要 `signtool.exe` 在 `PATH` 中（来自 Windows SDK），否则会报 `spawn signtool.exe ENOENT`。
 
-Licensed under the [MIT](LICENSE.txt) license.
+```bat
+set PATH=C:\Program Files (x86)\Windows Kits\10\bin\10.0.22621.0\x64;%PATH%
+pnpm run gulp vscode-win32-x64
+```
+
+生成安装包前必须先产出 `tools` 目录，否则 Inno Setup 会因缺少 `tools\*` 而中止：
+
+```bat
+pnpm run gulp vscode-win32-x64-inno-updater
+pnpm run gulp vscode-win32-x64-user-setup
+```
+
+产物：
+
+- 应用目录：`..\VSCode-win32-x64`
+- 安装包：`.build\win32-x64\user-setup\VSCodeSetup.exe`
+
+## 已知限制
+
+- 安装包未做代码签名，安装时会出现 SmartScreen 提示。
+- 无自动更新，升级需手动安装新版本。
+- 无扩展市场，仅内置固定扩展集。
+- 受网络限制，本地仓库目前是浅克隆，尚不能稳定拉取上游完整历史。
+
+## 许可与致谢
+
+本项目基于 [microsoft/vscode](https://github.com/microsoft/vscode) 派生，遵循 [MIT 许可](LICENSE.txt)。
+
+上游代码版权归 Microsoft Corporation 所有：
+
+```
+Copyright (c) 2015 - present Microsoft Corporation
+```
+
+Hestia 自身的改动同样以 MIT 许可发布。使用本产品时请同时遵守上游许可条款。
